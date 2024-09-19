@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Interface</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .tab-bar {
+            display: flex;
+            background-color: #007bff;
+            padding: 10px;
+        }
+
+        .tab-bar button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .tab-bar button.active {
+            background-color: #0056b3;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tab Navigation Bar -->
+    <div class="tab-bar">
+        <button onclick="openTab('main', this)" class="active">Main Page</button>
+        <button onclick="openTab('flappy_planes', this)">Flappy Planes</button>
+        <button onclick="openTab('tic_tac_toe', this)">Tic Tac Toe</button>
+    </div>
+
+    <!-- Main Page Content -->
+    <div id="main" class="tab-content active">
+        <h1>Welcome to the Main Page</h1>
+        <p>This is the content for the main page.</p>
+    </div>
+
+    <!-- Iframe to load external pages for other tabs -->
+    <iframe id="flappy_planes" class="iframe-container tab-content" src="flappy_planes.html"></iframe>
+    <iframe id="tic_tac_toe" class="iframe-container tab-content" src="tic_tac_toe.html"></iframe>
+
+    <script>
+        function openTab(tabId, element) {
+            // Hide all content (divs and iframes)
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show the selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Remove 'active' class from all buttons
+            const buttons = document.querySelectorAll('.tab-bar button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Add 'active' class to the clicked button
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
