@@ -3,42 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabbed Interface</title>
+    <title>5 Guys Games!</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .game-card {
+            width: 30%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .game-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-
-    <!-- Tab Navigation Bar -->
+    <!-- Tab Navigation Bar (unchanged) -->
     <div class="tab-bar">
         <button onclick="openTab('main', this)" class="active">Main Page</button>
         <button onclick="openTab('flappy_planes', this)">Flappy Planes</button>
         <button onclick="openTab('tic_tac_toe', this)">Tic Tac Toe</button>
     </div>
-
-    <!-- Main Page Content -->
+    
+    <!-- Enhanced Main Page Content -->
     <div id="main" class="tab-content active">
-        <h1>Welcome to the Main Page</h1>
-        <p>This is the content for the main page.</p>
+        <h1>Welcome to Our Game Hub!</h1>
+        <p>Enjoy our games. Choose from the tabs above to play!</p>
+        
+        <div class="game-info">
+            <div class="game-card">
+                <h2>Main Page</h2>
+                <img src="/api/placeholder/300/200" alt="Main Page">
+                <p>Your central hub for game information and navigation.</p>
+            </div>
+            <div class="game-card">
+                <h2>Flappy Planes</h2>
+                <img src="/api/placeholder/300/200" alt="Flappy Planes">
+                <p>Guide your plane through obstacles!</p>
+            </div>
+            <div class="game-card">
+                <h2>Tic Tac Toe</h2>
+                <img src="/api/placeholder/300/200" alt="Tic Tac Toe">
+                <p>Classic strategy game.</p>
+            </div>
+        </div>
     </div>
-
-    <!-- Iframe to load external pages for other tabs -->
-    <iframe id="flappy_planes" class="iframe-container tab-content" src="flappy_planes.html"></iframe>
-    <iframe id="tic_tac_toe" class="iframe-container tab-content" src="tic_tac_toe.html"></iframe>
+    
 
     <script>
+        // JavaScript function (unchanged)
         function openTab(tabId, element) {
-            // Hide all content (divs and iframes)
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.remove('active'));
-
-            // Show the selected tab content
             document.getElementById(tabId).classList.add('active');
-
-            // Remove 'active' class from all buttons
             const buttons = document.querySelectorAll('.tab-bar button');
             buttons.forEach(btn => btn.classList.remove('active'));
-
-            // Add 'active' class to the clicked button
             element.classList.add('active');
         }
     </script>
