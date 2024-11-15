@@ -1,31 +1,51 @@
+<!--
+    Contains all the UI elements for:
+    - Start screen with control selection
+    - Game canvas
+    - Score display
+    - Game over menu
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Planes</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="flappy_styles.css">
+    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="flappy_styles.css">
 </head>
 <body>
+    <!-- Start Page with Control Selection -->
     <div id="startPage">
         <h1>Flappy Planes</h1>
-        <button id="startButton">Game Start</button>
+        <div id="controlSelection">
+            <p>Select Control Method:</p>
+            <button id="keyboardControl">Keyboard (Space)</button>
+            <button id="mouseControl">Mouse Click</button>
+        </div>
+        <button id="startButton" style="display: none;">Game Start</button>
         <button id="scoreButton">Score</button>
-        <p>Press SPACE to fly up</p>
+        <p id="controlInstruction">Select control method to start</p>
     </div>
+
+    <!-- Score Page -->
     <div id="scorePage" style="display:none;">
         <h2>High Scores</h2>
         <ul id="scoreList"></ul>
         <button id="backButton">Back</button>
     </div>
+
+    <!-- Game Canvas -->
     <canvas id="gameCanvas" width="800" height="600" style="display:none;"></canvas>
+
+    <!-- Game Over Menu -->
     <div id="gameOverMenu" style="display:none;">
         <h2>Game Over</h2>
         <button id="restartButton">Restart</button>
         <button id="toStartButton">Main Menu</button>
         <button id="toScoreButton">View Scores</button>
     </div>
+
     <script src="game.js"></script>
 </body>
 </html>
