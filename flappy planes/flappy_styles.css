@@ -1,4 +1,8 @@
-body {
+/*
+ * Centers all content and sets up the background
+ */
+body
+{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +12,11 @@ body {
     background-color: #f0f0f0;
 }
 
-#startPage, #scorePage, #gameOverMenu {
+/*
+ * Applies to start page, score page, and game over menu
+ */
+#startPage, #scorePage, #gameOverMenu
+{
     text-align: center;
     background-color: white;
     padding: 20px;
@@ -16,7 +24,31 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-button {
+/*
+ * Control selection section styling
+ */
+#controlSelection
+{
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+    /*
+ * Control selection heading
+ */
+    #controlSelection p
+    {
+        margin: 0 0 10px 0;
+        font-weight: bold;
+    }
+
+/*
+ * Button styling for all buttons in the game
+ */
+button
+{
     font-size: 18px;
     padding: 10px 20px;
     margin: 10px;
@@ -27,33 +59,74 @@ button {
     border-radius: 5px;
 }
 
-    button:hover {
+    /*
+ * Hover effect for buttons
+ */
+    button:hover
+    {
         background-color: #45a049;
     }
 
-canvas {
+    /*
+ * Selected state for control buttons
+ */
+    button.selected
+    {
+        background-color: #2196F3;
+    }
+
+/*
+ * Game canvas styling
+ */
+canvas
+{
     border: 1px solid black;
     display: block;
 }
 
-#scoreList {
+/*
+ * Score list styling
+ */
+#scoreList
+{
     list-style-type: none;
     padding: 0;
     text-align: left;
 }
 
-    #scoreList li {
+    /*
+ * Individual score entries
+ */
+    #scoreList li
+    {
         margin: 5px 0;
         font-size: 16px;
     }
 
-h1, h2 {
+/*
+ * Heading styles
+ */
+h1, h2
+{
     color: #333;
 }
 
-#gameOverMenu {
+/*
+ * Game over menu positioning
+ */
+#gameOverMenu
+{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/*
+ * Control instruction text styling
+ */
+#controlInstruction
+{
+    color: #666;
+    font-style: italic;
 }
