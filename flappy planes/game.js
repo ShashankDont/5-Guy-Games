@@ -49,6 +49,17 @@ let animationFrameId;  // For animation control
 let lastTime = 0;      // For delta time calculation
 let controlType = null; // Selected control method ('keyboard' or 'mouse')
 
+// Debug Configuration
+const DEBUG = true;
+const DEBUG_LOG = function (message)
+{
+    if (DEBUG)
+    {
+        console.log(`[DEBUG] ${message}`);
+    }
+};
+let isGameInitialized = false;
+
 /*
  * Initialize the game
  * Sets up initial game state and objects
@@ -64,20 +75,32 @@ function initGame()
         width: 40,
         height: 30,
 
-        // Update plane position with delta time for consistent speed
         update: function (delta)
         {
-            this.velocity += GRAVITY * delta * 60;  // Apply gravity
-            this.y += this.velocity * delta * 60;   // Update position
+            try
+            {
+                this.velocity += GRAVITY * delta * 60;
+                let newY = this.y + (this.velocity * delta * 60);
+
+                if (newY >= 0 && newY <= canvas.height - this.height)
+                {
+                    this.y = newY;
+                }
+
+                DEBUG_LOG(`Plane position: ${this.x}, ${this.y}, Velocity: ${this.velocity}`);
+            }
+            catch (error)
+            {
+                console.error("Error updating plane:", error);
+                throw error;
+            }
         },
 
-        // Make the plane jump
         jump: function ()
         {
             this.velocity = JUMP_FORCE;
         },
 
-        // Draw the plane on the canvas
         draw: function ()
         {
             ctx.save();
@@ -214,8 +237,7 @@ function updatePipes(delta)
 
     // Draw pipes
     ctx.fillStyle = 'green';
-    pipes.forEach(pipe =>
-    {
+    pipes.forEach(pipe => {
         ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
         ctx.fillRect(pipe.x, pipe.bottomY, PIPE_WIDTH, canvas.height - pipe.bottomY);
     });
@@ -278,32 +300,50 @@ function updateGame(delta)
  */
 function gameLoop(currentTime)
 {
-    if (!lastTime) lastTime = currentTime;
-
-    const deltaTime = currentTime - lastTime;
-    lastTime = currentTime;
-
-    if (deltaTime >= frameTime)
+    try
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'skyblue';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (!isGameInitialized)
+        {
+            console.error("Game not properly initialized");
+            return;
+        }
+
+        if (!lastTime) lastTime = currentTime;
+
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        if (deltaTime >= frameTime)
+        {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'skyblue';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (!gameOver)
+            {
+                updateGame(deltaTime / 1000);
+
+                if (checkCollision())
+                {
+                    gameOver = true;
+                    endGame();
+                }
+
+                frameCount++;
+            }
+        }
 
         if (!gameOver)
         {
-            updateGame(deltaTime / 1000);
-
-            if (checkCollision())
-            {
-                gameOver = true;
-                endGame();
-            }
-
-            frameCount++;
+            animationFrameId = requestAnimationFrame(gameLoop);
         }
     }
-
-    animationFrameId = requestAnimationFrame(gameLoop);
+    catch (error)
+    {
+        console.error("Error in game loop:", error);
+        gameOver = true;
+        endGame();
+    }
 }
 
 /*
@@ -404,12 +444,36 @@ function showGameOverMenu()
  */
 function startGame()
 {
-    startPage.style.display = 'none';
-    canvas.style.display = 'block';
-    gameOverMenu.style.display = 'none';
-    initGame();
-    setupControls();
-    animationFrameId = requestAnimationFrame(gameLoop);
+    try
+    {
+        DEBUG_LOG("Starting new game...");
+
+        if (!ctx)
+        {
+            console.error("Canvas context not available");
+            return;
+        }
+
+        startPage.style.display = 'none';
+        canvas.style.display = 'block';
+        gameOverMenu.style.display = 'none';
+
+        initGame();
+        setupControls();
+
+        if (animationFrameId)
+        {
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        isGameInitialized = true;
+        animationFrameId = requestAnimationFrame(gameLoop);
+    }
+    catch (error)
+    {
+        console.error("Error starting game:", error);
+        alert("There was an error starting the game. Please refresh and try again.");
+    }
 }
 
 /*
