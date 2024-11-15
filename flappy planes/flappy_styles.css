@@ -1,5 +1,6 @@
 /*
- * Centers all content and sets up the background
+ * Main body styling for Flappy Planes game
+ * Centers game content and sets background
  */
 body
 {
@@ -13,7 +14,8 @@ body
 }
 
 /*
- * Applies to start page, score page, and game over menu
+ * Common menu styling
+ * Used for start page, score page, and game over menu
  */
 #startPage, #scorePage, #gameOverMenu
 {
@@ -25,7 +27,8 @@ body
 }
 
 /*
- * Control selection section styling
+ * Control selection container styling
+ * Contains keyboard and mouse control options
  */
 #controlSelection
 {
@@ -36,7 +39,8 @@ body
 }
 
     /*
- * Control selection heading
+ * Control selection paragraph styling
+ * Header text above control buttons
  */
     #controlSelection p
     {
@@ -45,7 +49,8 @@ body
     }
 
 /*
- * Button styling for all buttons in the game
+ * Base button styling
+ * Applied to all buttons in the game
  */
 button
 {
@@ -60,7 +65,8 @@ button
 }
 
     /*
- * Hover effect for buttons
+ * Button hover effect
+ * Visual feedback when mouse hovers over buttons
  */
     button:hover
     {
@@ -68,7 +74,8 @@ button
     }
 
     /*
- * Selected state for control buttons
+ * Selected control button state
+ * Indicates which control method is currently selected
  */
     button.selected
     {
@@ -77,6 +84,7 @@ button
 
 /*
  * Game canvas styling
+ * Sets border and display properties for the game area
  */
 canvas
 {
@@ -85,7 +93,8 @@ canvas
 }
 
 /*
- * Score list styling
+ * Score list container styling
+ * Contains the list of high scores
  */
 #scoreList
 {
@@ -95,7 +104,8 @@ canvas
 }
 
     /*
- * Individual score entries
+ * Individual score entry styling
+ * Format for each score in the high score list
  */
     #scoreList li
     {
@@ -104,7 +114,8 @@ canvas
     }
 
 /*
- * Heading styles
+ * Main heading styling
+ * Applied to h1 and h2 elements
  */
 h1, h2
 {
@@ -113,6 +124,7 @@ h1, h2
 
 /*
  * Game over menu positioning
+ * Centers the game over menu on screen
  */
 #gameOverMenu
 {
@@ -124,6 +136,7 @@ h1, h2
 
 /*
  * Control instruction text styling
+ * Shows which control method is currently active
  */
 #controlInstruction
 {
