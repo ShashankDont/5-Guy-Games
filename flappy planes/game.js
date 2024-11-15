@@ -82,14 +82,27 @@ function initGame()
                 this.velocity += GRAVITY * delta * 60;
                 let newY = this.y + (this.velocity * delta * 60);
 
-                if (newY >= 0 && newY <= canvas.height - this.height)
+                if (newY < 0)
+                {
+                    // Plane hits the top boundary
+                    console.log("Plane collided with the top boundary");
+                    gameOver = true;
+                    endGame();
+                }
+                else if (newY + this.height > canvas.height)
+                {
+                    // Plane hits the bottom boundary
+                    console.log("Plane collided with the bottom boundary");
+                    gameOver = true;
+                    endGame();
+                }
+                else
                 {
                     this.y = newY;
                 }
 
                 DEBUG_LOG(`Plane position: ${this.x}, ${this.y}, Velocity: ${this.velocity}`);
-            }
-            catch (error)
+            } catch (error)
             {
                 console.error("Error updating plane:", error);
                 throw error;
@@ -237,7 +250,8 @@ function updatePipes(delta)
 
     // Draw pipes
     ctx.fillStyle = 'green';
-    pipes.forEach(pipe => {
+    pipes.forEach(pipe =>
+    {
         ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
         ctx.fillRect(pipe.x, pipe.bottomY, PIPE_WIDTH, canvas.height - pipe.bottomY);
     });
@@ -249,31 +263,42 @@ function updatePipes(delta)
  */
 function checkCollision()
 {
-    const collisionBox =
-    {
-        x: plane.x + plane.width / 4,
-        y: plane.y + plane.height / 4,
-        width: plane.width / 2,
-        height: plane.height / 2
-    };
+    const planeLeft = plane.x;
+    const planeRight = plane.x + plane.width;
+    const planeTop = plane.y;
+    const planeBottom = plane.y + plane.height;
+
+    console.log("Plane dimensions:", planeLeft, planeRight, planeTop, planeBottom);
 
     // Check screen boundaries
-    if (collisionBox.y < 0 || collisionBox.y + collisionBox.height > canvas.height)
+    if (planeTop < 0 || planeBottom > canvas.height)
     {
+        console.log("Collision detected with screen boundaries!");
         return true;
     }
 
     // Check pipe collisions
-    for (let pipe of pipes)
+    for (let i = 0; i < pipes.length; i++)
     {
-        if (collisionBox.x + collisionBox.width > pipe.x && collisionBox.x < pipe.x + PIPE_WIDTH)
+        const pipe = pipes[i];
+        const pipeLeft = pipe.x;
+        const pipeRight = pipe.x + PIPE_WIDTH;
+        const pipeTop = pipe.topHeight;
+        const pipeBottom = pipe.bottomY;
+
+        console.log(`Pipe ${i} dimensions:`, pipeLeft, pipeRight, pipeTop, pipeBottom);
+
+        if (planeRight > pipeLeft && planeLeft < pipeRight)
         {
-            if (collisionBox.y < pipe.topHeight || collisionBox.y + collisionBox.height > pipe.bottomY)
+            if (planeTop < pipeTop || planeBottom > pipeBottom)
             {
+                console.log(`Collision detected with pipe ${i}!`);
                 return true;
             }
         }
     }
+
+    console.log("No collision detected");
     return false;
 }
 
@@ -325,11 +350,21 @@ function gameLoop(currentTime)
 
                 if (checkCollision())
                 {
+                    console.log("Collision detected in gameLoop");
                     gameOver = true;
                     endGame();
                 }
+                else
+                {
+                    console.log("No collision detected in gameLoop");
+                }
 
                 frameCount++;
+            }
+            else
+            {
+                console.log("Game over in gameLoop, stopping animation");
+                cancelAnimationFrame(animationFrameId);
             }
         }
 
@@ -352,9 +387,11 @@ function gameLoop(currentTime)
  */
 function endGame()
 {
+    console.log("endGame() function called");
     cancelAnimationFrame(animationFrameId);
     const endTime = Date.now();
     const timePlayed = (endTime - startTime) / 1000;
+    console.log(`Game ended after ${timePlayed} seconds`);
     const playerName = prompt("Game Over! Enter your name:");
     if (playerName)
     {
