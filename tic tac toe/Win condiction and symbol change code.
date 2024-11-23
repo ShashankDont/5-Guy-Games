@@ -1,0 +1,54 @@
+<div>
+  <p>Current X Symbol: <span id="xSymbol">X</span></p>
+  <p>Current O Symbol: <span id="oSymbol">O</span></p>
+  <button id="symbolChangeButton">Change Symbols</button>
+</div>
+
+<div class="counter">
+  <p>Player X Wins: <span id="xWins">0</span></p>
+  <p>Player O Wins: <span id="oWins">0</span></p>
+</div>
+
+
+let xSymbol = 'X';
+let oSymbol = 'O';
+
+// Reference to the display elements
+const xSymbolDisplay = document.getElementById('xSymbol');
+const oSymbolDisplay = document.getElementById('oSymbol');
+
+// Function to change the symbols for X and O
+function changeSymbols() {
+  // Prompt the user to enter new symbols
+  const newXSymbol = prompt('Enter a new symbol for X:', xSymbol);
+  const newOSymbol = prompt('Enter a new symbol for O:', oSymbol);
+
+  // Update symbols if the user provided valid inputs (not empty or canceled)
+  if (newXSymbol && newOSymbol) {
+    xSymbol = newXSymbol;
+    oSymbol = newOSymbol;
+
+    // Update the display for X and O symbols
+    xSymbolDisplay.textContent = xSymbol;
+    oSymbolDisplay.textContent = oSymbol;
+
+    // Also update all existing marks on the board (if any)
+    updateBoardSymbols();
+  }
+}
+
+// Function to update all marks on the board with the new symbols
+function updateBoardSymbols() {
+  cellElements.forEach(cell => {
+    if (cell.classList.contains(X_CLASS)) {
+      cell.textContent = xSymbol;
+    } else if (cell.classList.contains(O_CLASS)) {
+      cell.textContent = oSymbol;
+    }
+  });
+}
+
+// Add a button or event listener to trigger symbol change
+document.getElementById('symbolChangeButton').addEventListener('click', changeSymbols);
+
+
