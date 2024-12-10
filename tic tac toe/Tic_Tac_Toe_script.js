@@ -10,14 +10,12 @@ const WINNING_COMBINATIONS = [
   [0, 4, 8],
   [2, 4, 6]
 ];
-
 const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const restartButton = document.getElementById('restartButton');
 let oTurn;
 
 startGame();
-
 restartButton.addEventListener('click', startGame);
 
 function startGame() {
@@ -25,9 +23,9 @@ function startGame() {
   cellElements.forEach(cell => {
     cell.classList.remove(X_CLASS);
     cell.classList.remove(O_CLASS);
-    cell.textContent = '';
+    cell.textContent = ''; 
     cell.removeEventListener('click', handleClick);
-    cell.addEventListener('click', handleClick, { once: true });
+    cell.addEventListener('click', handleClick, { once: true }); 
   });
 }
 
