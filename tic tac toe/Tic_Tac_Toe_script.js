@@ -46,7 +46,8 @@ function handleClick(e) {
 }
 
 function placeMark(cell, currentClass) {
-  cell.classList.add(currentClass);
+    cell.textContent = currentClass === X_CLASS ? 'X' : 'O';
+    cell.classList.add(currentClass); 
 }
 
 function swapTurns() {
