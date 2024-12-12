@@ -90,3 +90,61 @@ function changeSymbols() {
     startGame(); // Reset the game with the new symbols
   }
 }
+
+let player1Name = "Player 1";
+let player2Name = "Player 2";
+let player1Wins = 0;
+let player2Wins = 0;
+let draws = 0;
+
+const player1NameElement = document.getElementById('player1Name');
+const player2NameElement = document.getElementById('player2Name');
+const player1WinsElement = document.getElementById('player1Wins');
+const player2WinsElement = document.getElementById('player2Wins');
+const drawsElement = document.getElementById('draws');
+const player1Input = document.getElementById('player1Input');
+const player2Input = document.getElementById('player2Input');
+const updateNamesButton = document.getElementById('updateNamesButton');
+
+updateNamesButton.addEventListener('click', updateNames);
+
+function updateNames() {
+    const newPlayer1Name = player1Input.value.trim();
+    const newPlayer2Name = player2Input.value.trim();
+    if (newPlayer1Name) player1Name = newPlayer1Name;
+    if (newPlayer2Name) player2Name = newPlayer2Name;
+
+    player1NameElement.textContent = player1Name;
+    player2NameElement.textContent = player2Name;
+}
+
+function handleClick(e) {
+    const cell = e.target;
+    const currentClass = oTurn ? O_CLASS : X_CLASS;
+    placeMark(cell, currentClass);
+    if (checkWin(currentClass)) {
+        const winner = oTurn ? player2Name : player1Name;
+        if (oTurn) {
+            player2Wins++;
+        } else {
+            player1Wins++;
+        }
+        updateScoreboard();
+        setTimeout(() => alert(`${winner} Wins!`), 10);
+        endGame();
+    } else if (isDraw()) {
+        draws++;
+        updateScoreboard();
+        setTimeout(() => alert('Draw!'), 10);
+        endGame();
+    } else {
+        swapTurns();
+    }
+}
+
+function updateScoreboard() {
+    player1WinsElement.textContent = player1Wins;
+    player2WinsElement.textContent = player2Wins;
+    drawsElement.textContent = draws;
+}
+
