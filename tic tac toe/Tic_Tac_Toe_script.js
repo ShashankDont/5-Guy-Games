@@ -24,27 +24,46 @@ let oTurn;
 startGame();
 restartButton.addEventListener('click', startGame);
 
-function updateScoreboard() {
+function updateScoreboard() 
+{
   scoreList.innerHTML = '';
-  for (const player in scores) {
-      const score = scores[player];
-      const li = document.createElement('li');
-      li.textContent = `${player}: Wins - ${score.wins}`;
-      scoreList.appendChild(li);
+  for (const player in scores) 
+  {
+    const score = scores[player];
+    const li = document.createElement('li');
+    li.textContent = `${player}: Wins - ${score.wins} Losses - ${score.losses} Draws - ${score.draws}`;
+    scoreList.appendChild(li);
   }
 }
 
-function updateScore(winner) 
+function updateDraws() 
 {
-  if (!scores[winner]) 
-  {  //initialize wins for a player
-    scores[winner] = { wins: 0 };
-  }
-  scores[winner].wins++;
+  const playerX = playerXInput.value.trim() || "Player X";
+  const playerO = playerOInput.value.trim() || "Player O";
+
+  if (!scores[playerX]) scores[playerX] = { wins: 0, losses: 0, draws: 0 };
+  if (!scores[playerO]) scores[playerO] = { wins: 0, losses: 0, draws: 0 };
+
+  scores[playerX].draws++;
+  scores[playerO].draws++;
   updateScoreboard();
 }
 
+function updateScore(winner, loser) 
+{
+  if (!scores[winner]) 
+  {
+    scores[winner] = { wins: 0, losses: 0, draws: 0 };
+  }
+  if (!scores[loser]) 
+  {
+    scores[loser] = { wins: 0, losses: 0, draws: 0};
+  }
 
+  scores[winner].wins++;
+  scores[loser].losses++;
+  updateScoreboard();
+}
 
 function startGame() {
   oTurn = false;
@@ -63,10 +82,18 @@ function handleClick(e) {
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
       const winner = currentClass === X_CLASS ? playerXInput.value.trim() || "Player X" : playerOInput.value.trim() || "Player O";
+      let loser;
+      if (winner === (playerXInput.value.trim() || "Player X")) {
+          loser = playerOInput.value.trim() || "Player O";  
+      } else {
+          loser = playerXInput.value.trim() || "Player X";  
+      }
+
       setTimeout(() => alert(`${winner} Wins!`), 10);
-      updateScore(winner);
+      updateScore(winner, loser);
       endGame();
   } else if (isDraw()) {
+      updateDraws();
       setTimeout(() => alert('Draw!'), 10);
       endGame();
   } else {
