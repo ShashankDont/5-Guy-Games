@@ -42,7 +42,6 @@ function handleClick(e) {
       endGame();
   } else if (isDraw()) {
       setTimeout(() => alert('Draw!'), 10);
-      alert('Draw!');
       endGame();
   } else {
       swapTurns();
