@@ -13,6 +13,9 @@ const WINNING_COMBINATIONS = [
 const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const restartButton = document.getElementById('restartButton');
+const playerXInput = document.getElementById('Xs');
+const playerOInput = document.getElementById('Os');
+
 let oTurn;
 
 startGame();
@@ -34,13 +37,15 @@ function handleClick(e) {
   const currentClass = oTurn ? O_CLASS : X_CLASS;
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
-    setTimeout(() => alert(`${currentClass.toUpperCase()} Wins!`), 10);
-    endGame();
+      const winner = currentClass === X_CLASS ? playerXInput.value.trim() || "Player X" : playerOInput.value.trim() || "Player O";
+      setTimeout(() => alert(`${winner} Wins!`), 10);
+      endGame();
   } else if (isDraw()) {
-    setTimeout(() => alert('Draw!'), 10);
-    endGame();
+      setTimeout(() => alert('Draw!'), 10);
+      alert('Draw!');
+      endGame();
   } else {
-    swapTurns();
+      swapTurns();
   }
 }
 
