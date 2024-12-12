@@ -17,11 +17,22 @@ const playerXInput = document.getElementById('Xs');
 const playerOInput = document.getElementById('Os');
 
 let scores = {};
+const scoreList = document.getElementById('scoreList');
 
 let oTurn;
 
 startGame();
 restartButton.addEventListener('click', startGame);
+
+function updateScoreboard() {
+  scoreList.innerHTML = '';
+  for (const player in scores) {
+      const score = scores[player];
+      const li = document.createElement('li');
+      li.textContent = `${player}: Wins - ${score.wins}`;
+      scoreList.appendChild(li);
+  }
+}
 
 function updateScore(winner) 
 {
@@ -30,7 +41,10 @@ function updateScore(winner)
     scores[winner] = { wins: 0 };
   }
   scores[winner].wins++;
+  updateScoreboard();
 }
+
+
 
 function startGame() {
   oTurn = false;
