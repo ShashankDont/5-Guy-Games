@@ -39,7 +39,8 @@ function handleClick(e) {
   const currentClass = oTurn ? O_CLASS : X_CLASS;
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
-    setTimeout(() => alert(`${currentClass.toUpperCase()} Wins!`), 10);
+    const winner = currentClass === X_CLASS ? X_SYMBOL : O_SYMBOL;
+    setTimeout(() => alert(`${winner} Wins!`), 10);
     endGame();
   } else if (isDraw()) {
     setTimeout(() => alert('Draw!'), 10);
