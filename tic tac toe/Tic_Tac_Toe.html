@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="../style.css">
-    <title>Tic-Tac-Toe</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             background-color: #f4f4f4;
         }
@@ -32,31 +31,34 @@
             align-items: center;
             cursor: pointer;
         }
-        h1 {
+        .scoreboard {
+            margin-bottom: 20px;
             text-align: center;
         }
     </style>
 </head>
 <body>
-
-    <div>
-        <h1>Tic-Tac-Toe</h1>
-        <div class="board" id="board">
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-        </div>
-        <button id="restartButton" style="margin-top: 20px;">Restart Game</button>
-        <button id="changeSymbolsButton" style="margin-top: 20px;">Change Symbols</button>
+    <div class="scoreboard">
+        <h2>Scoreboard</h2>
+        <p>Player X (<span id="playerXName">X</span>): <span id="playerXScore">0</span></p>
+        <p>Player O (<span id="playerOName">O</span>): <span id="playerOScore">0</span></p>
+        <p>Draws: <span id="drawScore">0</span></p>
     </div>
+    <h1>Tic Tac Toe</h1>
+    <div class="board" id="board">
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+    </div>
+    <button id="restartButton" style="margin-top: 20px;">Restart Game</button>
+    <button id="changeSymbolsButton" style="margin-top: 20px;">Change Symbols</button>
 
     <script src="Tic_Tac_Toe_script.js"></script>
-
 </body>
 </html>
