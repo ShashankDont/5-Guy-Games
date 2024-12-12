@@ -39,7 +39,7 @@ function handleClick(e) {
   const currentClass = oTurn ? O_CLASS : X_CLASS;
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
-    const winnerSymbol = currentClass === X_CLASS ? X_SYMBOL : O_SYMBOL;
+    const winnerSymbol = oTurn ? O_SYMBOL : X_SYMBOL; 
     setTimeout(() => alert(`${winnerSymbol} Wins!`), 10);
     endGame();
   } else if (isDraw()) {
@@ -49,6 +49,7 @@ function handleClick(e) {
     swapTurns();
   }
 }
+
 
 function placeMark(cell, currentClass) {
   cell.textContent = currentClass === X_CLASS ? X_SYMBOL : O_SYMBOL;
