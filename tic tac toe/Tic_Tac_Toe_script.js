@@ -24,6 +24,8 @@ const changeSymbolsButton = document.getElementById('changeSymbolsButton');
 const playerXScore = document.getElementById('playerXScore');
 const playerOScore = document.getElementById('playerOScore');
 const drawScore = document.getElementById('drawScore');
+const playerXName = document.getElementById('playerXName');
+const playerOName = document.getElementById('playerOName');
 let oTurn;
 
 startGame();
@@ -130,6 +132,8 @@ function changeSymbols() {
   if (newX && newO) {
     X_SYMBOL = newX;
     O_SYMBOL = newO;
+    playerXName.textContent = newX;
+    playerOName.textContent = newO;
     alert(`Symbols updated! X: ${X_SYMBOL}, O: ${O_SYMBOL}`);
     startGame(); // Reset the game with the new symbols
   }
