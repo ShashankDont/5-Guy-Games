@@ -1,5 +1,8 @@
 const X_CLASS = 'x';
 const O_CLASS = 'o';
+let X_SYMBOL = 'X';
+let O_SYMBOL = 'O';
+
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -13,10 +16,12 @@ const WINNING_COMBINATIONS = [
 const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const restartButton = document.getElementById('restartButton');
+const changeSymbolsButton = document.getElementById('changeSymbolsButton');
 let oTurn;
 
 startGame();
 restartButton.addEventListener('click', startGame);
+changeSymbolsButton.addEventListener('click', changeSymbols);
 
 function startGame() {
   oTurn = false;
@@ -45,8 +50,8 @@ function handleClick(e) {
 }
 
 function placeMark(cell, currentClass) {
-    cell.textContent = currentClass === X_CLASS ? 'X' : 'O';
-    cell.classList.add(currentClass); 
+  cell.textContent = currentClass === X_CLASS ? X_SYMBOL : O_SYMBOL;
+  cell.classList.add(currentClass); 
 }
 
 function swapTurns() {
@@ -71,4 +76,15 @@ function endGame() {
   cellElements.forEach(cell => {
     cell.removeEventListener('click', handleClick);
   });
+}
+
+function changeSymbols() {
+  const newX = prompt('Enter new symbol for X:', X_SYMBOL);
+  const newO = prompt('Enter new symbol for O:', O_SYMBOL);
+  if (newX && newO) {
+    X_SYMBOL = newX;
+    O_SYMBOL = newO;
+    alert(`Symbols updated! X: ${X_SYMBOL}, O: ${O_SYMBOL}`);
+    startGame(); // Reset the game with the new symbols
+  }
 }
