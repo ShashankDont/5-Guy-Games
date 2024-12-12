@@ -16,10 +16,21 @@ const restartButton = document.getElementById('restartButton');
 const playerXInput = document.getElementById('Xs');
 const playerOInput = document.getElementById('Os');
 
+let scores = {};
+
 let oTurn;
 
 startGame();
 restartButton.addEventListener('click', startGame);
+
+function updateScore(winner) 
+{
+  if (!scores[winner]) 
+  {  //initialize wins for a player
+    scores[winner] = { wins: 0 };
+  }
+  scores[winner].wins++;
+}
 
 function startGame() {
   oTurn = false;
@@ -39,6 +50,7 @@ function handleClick(e) {
   if (checkWin(currentClass)) {
       const winner = currentClass === X_CLASS ? playerXInput.value.trim() || "Player X" : playerOInput.value.trim() || "Player O";
       setTimeout(() => alert(`${winner} Wins!`), 10);
+      updateScore(winner);
       endGame();
   } else if (isDraw()) {
       setTimeout(() => alert('Draw!'), 10);
