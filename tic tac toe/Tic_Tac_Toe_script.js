@@ -26,11 +26,58 @@ const playerOScore = document.getElementById('playerOScore');
 const drawScore = document.getElementById('drawScore');
 const playerXName = document.getElementById('playerXName');
 const playerOName = document.getElementById('playerOName');
+const playerXInput = document.getElementById('Xs');
+const playerOInput = document.getElementById('Os');
+
+let scores = {};
+const scoreList = document.getElementById('scoreList');
+
 let oTurn;
 
 startGame();
 
 restartButton.addEventListener('click', startGame);
+
+function updateScoreboard() 
+{
+  scoreList.innerHTML = '';
+  for (const player in scores) 
+  {
+    const score = scores[player];
+    const li = document.createElement('li');
+    li.textContent = `${player}: Wins - ${score.wins} Losses - ${score.losses} Draws - ${score.draws}`;
+    scoreList.appendChild(li);
+  }
+}
+
+function updateDraws() 
+{
+  const playerX = playerXInput.value.trim() || "Player X";
+  const playerO = playerOInput.value.trim() || "Player O";
+
+  if (!scores[playerX]) scores[playerX] = { wins: 0, losses: 0, draws: 0 };
+  if (!scores[playerO]) scores[playerO] = { wins: 0, losses: 0, draws: 0 };
+
+  scores[playerX].draws++;
+  scores[playerO].draws++;
+  updateScoreboard();
+}
+
+function updateScore(winner, loser) 
+{
+  if (!scores[winner]) 
+  {
+    scores[winner] = { wins: 0, losses: 0, draws: 0 };
+  }
+  if (!scores[loser]) 
+  {
+    scores[loser] = { wins: 0, losses: 0, draws: 0};
+  }
+
+  scores[winner].wins++;
+  scores[loser].losses++;
+  updateScoreboard();
+}
 changeSymbolsButton.addEventListener('click', changeSymbols);
 
 function startGame() {
@@ -62,7 +109,7 @@ function handleClick(e) {
     drawScore.textContent = draws;
     endGame();
   } else {
-    swapTurns();
+      swapTurns();
   }
 }
 
